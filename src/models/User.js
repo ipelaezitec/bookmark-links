@@ -56,8 +56,10 @@ var userSchema = new Schema({
 userSchema.plugin(uniqueValidator);
  
 userSchema.pre('save', async function(next){
-  if(!this.isModified("password")){
+  // if(!this.isModified("password")){
+  if ( this.password && this.isModified('password') ) { 
     try{
+      console.log('tessssssssssst')
       // salt is random data that is used as an additional input that hash password
       let salt = await bcrypt.genSalt(10);
       let hashedPassword = await bcrypt.hash(this.password, salt);
